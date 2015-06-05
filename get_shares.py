@@ -46,8 +46,10 @@ def check_shares(data):
             print("At {time} You found a {coin} share with a difficulty of {difficulty} which {valid_share} a valid share and {valid_block} a valid block. It resulted in a hash of {share_hash}.".format(**share))
 
     interval = (end_time - start_time).total_seconds()
-    hashrate = (total_diff * math.pow(2,32)) / interval / 1000000000000
-    print("Of %i Shares sent. Your Avg Hashrate from %s to %s was %f TH/s" % (total_shares, start_time, end_time, hashrate))
+    hashrate = (total_diff * math.pow(2,16)) / interval / 1000000
+    #hashrate = (total_diff * math.pow(2,32)) / interval / 1000000000000
+    print("Of %i Shares sent. Your Avg Hashrate from %s to %s was %f MH/s" % (total_shares, start_time, end_time, hashrate))
+    #print("Of %i Shares sent. Your Avg Hashrate from %s to %s was %f TH/s" % (total_shares, start_time, end_time, hashrate))
 
 def recv_timeout(the_socket,timeout=2):
     #make socket non blocking
@@ -85,9 +87,10 @@ def recv_timeout(the_socket,timeout=2):
     return ''.join(total_data)
 
 host = '127.0.0.1'
-port = 3333
+port = 3109
 
-message = {'id': 1, 'method': 'mining.get_shares', 'params': ['NZhBDowFnhMA1VYj4yfyzujDqhqtPqKZ8Z']}
+#message = {'id': 1, 'method': 'mining.get_shares', 'params': ['NZhBDowFnhMA1VYj4yfyzujDqhqtPqKZ8Z']}
+message = {'id': 1, 'method': 'mining.get_shares', 'params': ['bigvern.1', time.time()-86400, time.time()]}
 
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
